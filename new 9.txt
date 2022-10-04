@@ -1,0 +1,157 @@
+
+เลือกบางฟิลด์
+SELECT 
+	FirstName AS customers_firstname, 
+	LastName AS customers_lastname
+FROM customers;
+
+การใช้เงื่อนไข WHERE 
+SELECT * FROM customers WHERE Country = 'Canada' OR Country ='USA';
+
+DESC เรียงจากมากไปหาน้อย
+SELECT * FROM customers 
+WHERE Country = 'Canada' OR Country ='USA'
+ORDER BY CustomerId DESC;
+
+LIMIT จำกัดข้อมูล
+SELECT * FROM customers 
+WHERE Country = 'Canada' OR Country ='USA'
+ORDER BY CustomerId DESC
+LIMIT 5;
+
+SELECT CustomerId ,FirstName, LastName, Address 
+FROM customers
+WHERE CustomerId > 10;
+
+เพิ่มข้อมูล
+INSERT INTO customers
+VALUES(60,"Pachara","Detkhon","PacharaStore","Valentine's Home", "Takhonyang","MSK","Thailand",44150,"0980124567","+420 2 4172 5555","pachara@gmail.com",6);
+
+INSERT INTO customers (FirstName, LastName, Email) VALUES ("Supaporn","Pansok","supaporn@gmail.com");
+
+อัพเดตข้อมูล
+UPDATE customers 
+SET Company = "PacharaStore.Co.Ltd."
+WHERE CustomerId = 61;
+
+ลบข้อมูล
+DELETE FROM customers
+WHERE CustomerId = 61;
+
+นับข้อมูลด้วย COUNT
+SELECT COUNT (FirstName) 
+FROM Customers
+WHERE City = "Paris";
+
+AVG ค่าเฉลี่ย
+SELECT AVG (Total) 
+FROM invoices;
+
+SUM ผลรวม
+SELECT SUM (Total) 
+FROM invoices;
+
+
+MIN น้อยสุด
+SELECT MIN (Total) 
+FROM invoices;
+
+
+MAX มากสุด
+SELECT MAX (Total) 
+FROM invoices;
+
+GROUP BY รวมกลุ่มข้อมูล และนับ
+SELECT COUNT(CustomerId),City
+FROM customers
+GROUP BY City;
+
+GROUP BY รวมกลุ่มข้อมูล และนับและเรียงลำดับข้อมูล
+SELECT count(CustomerId) AS CusID,Country
+FROM customers
+GROUP BY City
+ORDER BY CustomerId DESC;
+
+การใช้ Having ใช้กับ Aggregate Function และอยู่หลัง GROUP BY (ถ้ามี)
+SELECT count(CustomerId),Country
+FROM customers
+GROUP BY Country
+HAVING count(CustomerId) >=5
+ORDER BY CustomerId DESC;
+// 2 
+SELECT count(CustomerId) AS CusID,Country
+FROM customers
+GROUP BY Country
+HAVING CusID >=5
+ORDER BY CusID DESC;
+---------------------------------
+เพิ่มเติม
+SELECT SUM (Milliseconds) / 60000 
+AS Sum_Minute, AlbumId
+FROM tracks
+GROUP BY AlbumId
+ORDER BY Sum_Minute;
+
+
+-------------
+การลำดับคำสั่ง 
+SELECT
+	Column_name(s)
+FROM
+	table_name
+WHERE
+	Condition(s)
+GROUP BY
+	Column_name(s)
+HAVING
+	Condition(s)
+ORDER BY
+	Column_name(s)
+LIMIT
+	number of rows;
+	
+--------------
+OPERATORS
+การใช้ NOT
+SELECT * FROM employees
+WHERE NOT Title = "IT Staff";
+
+การใช้ IN
+SELECT * FROM employees
+WHERE Title IN('General Manager','Sales Manager',
+'Sales Support Agent')
+
+NOT และ IN
+SELECT * FROM customers
+WHERE Country NOT IN('Brazil','USA','Sweden')
+
+การใช้ LIKE
+SELECT * FROM customers
+WHERE
+	FirstName LIKE "r%t";
+// % คือสามารถเอาตัวษรที่เราอยากค้นหาไปวาง เช่น LIKE "R%B%T" ตัวอักษร R ต้องมีอยู่ข้างหน้า T ต้องตามหลัง B อยู่ตรงไหนก็ได้ภายในชื่อ
+
+การใช้ BETWEEN
+SELECT * FROM customers
+WHERE
+	Country IN ('Brazil','Czech Republic') 
+	AND CustomerId BETWEEN 1 AND 30
+	
+การใช้ IS NULL ดูข้อมูลที่มีช่องว่าง
+SELECT * FROM customers
+WHERE
+	Phone IS NULL; //Aplied Phone IS NOT NULL;
+	
+การใช้ AND และ  OR
+// AND ต้องจริงเท่านั้น, OR จริงหรือเท็จ เป็นจริง 
+
+**APPLIED**
+SELECT * 
+FROM customers
+WHERE
+	Country NOT IN ("USA", "Canada")
+OR
+SELECT * 
+FROM customers
+WHERE NOT (Country = "USA"
+OR Country = "Canada")

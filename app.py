@@ -14,8 +14,10 @@ def menu():
         5.ค้นหาข้อมูล
         6.ออกจากระบบ
         """)
+# ฟังก์ชันเติม comma เพื่อให้ดูง่าย
 def num_format(number):
     return ("{:,.2f}".format(number))
+# ฟังก์บันทึกข้อมูล
 def create():
     fname = input("ชื่อ: ")
     lname = input("นามสกุล: ")
@@ -31,6 +33,7 @@ def create():
     conn.commit()
     print("บันทึกเรียบร้อย ID",cursor.lastrowid)
 
+# ฟังก์ชันอัพเดตข้อมูล
 def update():
     id = int(input("ID: "))
     fname = input("ชื่อ: ")
@@ -48,11 +51,14 @@ def update():
     sleep(1)
     print("อัพเดตข้อมูลเสร็จสิ้น")
     show_data()
+
+# ฟังก์ชันแสดงข้อมูล
 def show_data():
     sql = """SELECT * FROM employees;"""
     cursor = conn.execute(sql)
     for row in cursor:
         print('รหัสพนักงาน',row[0],'ชื่อ',row[1], 'นามสกุล',row[2], '\nเบอร์โทร',row[3], 'เงินเดือน',num_format(int(row[4])), 'ตำแหน่ง',row[5], '\nที่อยู่',row[6])
+# ฟังก์ชันลบข้อมูล
 def delete():
     id = int(input('ป้อนรหัสพนักงานที่ต้องการลบ: '))
     sql = f"""DELETE FROM `employees` WHERE emp_id = {id};"""
@@ -62,6 +68,8 @@ def delete():
     print('ลบเรียบร้อย...')
     print("=======================")
     show_data()
+
+# ฟังก์ชันค้นหาข้อมูล 
 def search():
     name = input("กรุณาป้อนชื่อที่ต้องการค้นหา: ")
     sql = f"""SELECT * FROM `employees` WHERE `fname` LIKE '%{name}%';"""
@@ -104,7 +112,7 @@ def main():
                         print("ออกจากระบบ")
                         break
                     else:
-                        print("Error, Please again!!")
+                        print("Error, Please Try Again!!")
             else:
                 print("Username or Password Its Incorrect! Please Login Again!")
         q = input("Do you want to exit Y/N? :")
@@ -114,7 +122,9 @@ def main():
             print("Working...")
             sleep(1)
         else:
-            print('Command Invalid!')       
+            print('Command Invalid!')     
+# เรียกฟังก์ชันหลักทำงาน  
 if __name__ == "__main__":
     main()
+# ปิดการเชื่อมต่อฐานข้อมูล
 conn.close()
